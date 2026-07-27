@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+
+:root {
+  /* Paleta "Espaço Curioso" — cores primitivas */
+  --color-bg: #F3F0FF;
+  --color-surface: #FFFFFF;
+  --color-indigo: #4B4E9E;
+  --color-indigo-dark: #262859;
+  --color-orange: #FF7A45;
+  --color-orange-dark: #9C3D14;
+  --color-mint: #3DDC97;
+  --color-mint-dark: #157A52;
+  --color-magenta: #E14F9C;
+  --color-magenta-dark: #8A1F5C;
+  --color-text: #221F3D;
+  --color-text-secondary: #6B679A;
+  --color-border: #DAD5F5;
+
+  /* Tipografia: Bubblegum Sans pra títulos/letras, sans do sistema pro resto */
+  --font-heading: 'Bubblegum Sans', cursive;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --fs-caption: 0.75rem;
+  --fs-body: 1rem;
+  --fs-subheading: 1.25rem;
+  --fs-title: 1.75rem;
+  --fs-display: 3.5rem;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md) var(--space-xl);
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.app-header h1 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-title);
+  font-weight: 400;
+  margin: 0 0 var(--space-xs);
+}
+
+.app-header p {
+  font-size: var(--fs-body);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ============================================
+   LetterTile — cada quadrado da grade de 26 letras.
+   A cor vem de --tile-accent, definida por componente
+   em JS (ciclando entre os 4 tons da paleta).
+   ============================================ */
+
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+
+/* [hidden] e a classe .letter-grid têm a mesma especificidade CSS —
+   sem isso, "display: grid" ganha e a grade não some de verdade. */
+.letter-grid[hidden] {
+  display: none;
+}
+
+.letter-tile {
+  position: relative;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--tile-accent);
+  color: var(--tile-accent-text, #fff);
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.letter-tile:hover,
+.letter-tile:focus-visible {
+  transform: scale(1.05);
+}
+
+.letter-tile:focus-visible {
+  outline: 3px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   ProgressBadge — bolinha de check no canto do tile
+   quando a letra já foi praticada.
+   ============================================ */
+
+.progress-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-indigo-dark);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  border: 2px solid var(--color-bg);
+}
+
+/* ============================================
+   Tela de traçado
+   ============================================ */
+
+.trace-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.trace-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.trace-letter-label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-title);
+  min-width: 3ch;
+  text-align: center;
+}
+
+/* ============================================
+   NavButton — pílulas e setas de navegação
+   ============================================ */
+
+.nav-button {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.nav-button--pill {
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  box-shadow: 0 0 0 2px var(--color-border) inset;
+}
+
+.nav-button--pill:hover {
+  box-shadow: 0 0 0 2px var(--color-indigo) inset;
+}
+
+.nav-button--arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--color-border) inset;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.nav-button--arrow:hover {
+  box-shadow: 0 0 0 2px var(--color-indigo) inset;
+}
+
+.trace-actions {
+  display: flex;
+  gap: var(--space-md);
+}
+
+/* ============================================
+   TraceCanvas — área de traçado com contorno
+   pontilhado. A cor da borda também cicla com
+   --canvas-accent, igual o LetterTile.
+   ============================================ */
+
+.trace-canvas-wrap {
+  border-radius: var(--radius-lg);
+  border: 6px solid var(--canvas-accent, var(--color-indigo));
+  background: var(--color-surface);
+  overflow: hidden;
+  line-height: 0;
+}
+
+.trace-canvas-wrap canvas {
+  display: block;
+  touch-action: none;
+}
